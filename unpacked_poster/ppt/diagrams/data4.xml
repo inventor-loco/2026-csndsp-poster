@@ -1,0 +1,192 @@
+<?xml version="1.0" encoding="utf-8"?>
+<dgm:dataModel xmlns:dgm="http://schemas.openxmlformats.org/drawingml/2006/diagram" xmlns:a="http://schemas.openxmlformats.org/drawingml/2006/main">
+  <dgm:ptLst>
+    <dgm:pt modelId="{602C933F-F515-447D-9A06-7339450EEAA0}" type="doc">
+      <dgm:prSet loTypeId="urn:diagrams.loki3.com/VaryingWidthList" loCatId="list" qsTypeId="urn:microsoft.com/office/officeart/2005/8/quickstyle/simple1" qsCatId="simple" csTypeId="urn:microsoft.com/office/officeart/2005/8/colors/accent1_2" csCatId="accent1" phldr="1"/>
+      <dgm:spPr/>
+    </dgm:pt>
+    <dgm:pt modelId="{9385A9A7-CD50-4BEB-A123-1C877E38B565}">
+      <dgm:prSet phldrT="[Text]" custT="1"/>
+      <dgm:spPr/>
+      <dgm:t>
+        <a:bodyPr/>
+        <a:lstStyle/>
+        <a:p>
+          <a:r>
+            <a:rPr lang="en-GB" sz="2800" dirty="0"/>
+            <a:t>Placeholder text</a:t>
+          </a:r>
+        </a:p>
+      </dgm:t>
+    </dgm:pt>
+    <dgm:pt modelId="{649DCBB0-E6EE-40B1-803F-1BDBDB2A5ED6}" type="parTrans" cxnId="{E0E15BC2-59E3-433C-AB5C-6622F41433C9}">
+      <dgm:prSet/>
+      <dgm:spPr/>
+      <dgm:t>
+        <a:bodyPr/>
+        <a:lstStyle/>
+        <a:p>
+          <a:endParaRPr lang="en-GB"/>
+        </a:p>
+      </dgm:t>
+    </dgm:pt>
+    <dgm:pt modelId="{8A6163E3-A2F7-4C72-A25F-25D40A3ACE70}" type="sibTrans" cxnId="{E0E15BC2-59E3-433C-AB5C-6622F41433C9}">
+      <dgm:prSet/>
+      <dgm:spPr/>
+      <dgm:t>
+        <a:bodyPr/>
+        <a:lstStyle/>
+        <a:p>
+          <a:endParaRPr lang="en-GB"/>
+        </a:p>
+      </dgm:t>
+    </dgm:pt>
+    <dgm:pt modelId="{2D6BC763-EB35-4D85-87A1-00ABA1A5DC3A}">
+      <dgm:prSet phldrT="[Text]" custT="1"/>
+      <dgm:spPr/>
+      <dgm:t>
+        <a:bodyPr/>
+        <a:lstStyle/>
+        <a:p>
+          <a:r>
+            <a:rPr lang="en-GB" sz="2800" dirty="0"/>
+            <a:t>Placeholder text</a:t>
+          </a:r>
+        </a:p>
+      </dgm:t>
+    </dgm:pt>
+    <dgm:pt modelId="{30687BE3-DB0E-45EF-BCFE-EFF39B056A39}" type="parTrans" cxnId="{070A39F8-90A0-421D-B2DA-89359162C0AE}">
+      <dgm:prSet/>
+      <dgm:spPr/>
+      <dgm:t>
+        <a:bodyPr/>
+        <a:lstStyle/>
+        <a:p>
+          <a:endParaRPr lang="en-GB"/>
+        </a:p>
+      </dgm:t>
+    </dgm:pt>
+    <dgm:pt modelId="{707D65F9-1502-4E50-85F1-A964E8A50E8F}" type="sibTrans" cxnId="{070A39F8-90A0-421D-B2DA-89359162C0AE}">
+      <dgm:prSet/>
+      <dgm:spPr/>
+      <dgm:t>
+        <a:bodyPr/>
+        <a:lstStyle/>
+        <a:p>
+          <a:endParaRPr lang="en-GB"/>
+        </a:p>
+      </dgm:t>
+    </dgm:pt>
+    <dgm:pt modelId="{DA88906E-A8E5-47C7-883D-8C76F1E57EF8}">
+      <dgm:prSet phldrT="[Text]" custT="1"/>
+      <dgm:spPr/>
+      <dgm:t>
+        <a:bodyPr/>
+        <a:lstStyle/>
+        <a:p>
+          <a:r>
+            <a:rPr lang="en-GB" sz="2800" dirty="0"/>
+            <a:t>Placeholder text</a:t>
+          </a:r>
+        </a:p>
+      </dgm:t>
+    </dgm:pt>
+    <dgm:pt modelId="{2A3DF3E7-77D7-4006-8C09-7CCC4E1CB55C}" type="parTrans" cxnId="{3B67A584-BBEF-410F-B116-6AFFB5E844E4}">
+      <dgm:prSet/>
+      <dgm:spPr/>
+      <dgm:t>
+        <a:bodyPr/>
+        <a:lstStyle/>
+        <a:p>
+          <a:endParaRPr lang="en-GB"/>
+        </a:p>
+      </dgm:t>
+    </dgm:pt>
+    <dgm:pt modelId="{2CB1B4BF-5648-4513-8ED2-BA9067078688}" type="sibTrans" cxnId="{3B67A584-BBEF-410F-B116-6AFFB5E844E4}">
+      <dgm:prSet/>
+      <dgm:spPr/>
+      <dgm:t>
+        <a:bodyPr/>
+        <a:lstStyle/>
+        <a:p>
+          <a:endParaRPr lang="en-GB"/>
+        </a:p>
+      </dgm:t>
+    </dgm:pt>
+    <dgm:pt modelId="{1419425E-CDB1-4BCD-9AB1-6A1716B40398}" type="pres">
+      <dgm:prSet presAssocID="{602C933F-F515-447D-9A06-7339450EEAA0}" presName="Name0" presStyleCnt="0">
+        <dgm:presLayoutVars>
+          <dgm:resizeHandles/>
+        </dgm:presLayoutVars>
+      </dgm:prSet>
+      <dgm:spPr/>
+    </dgm:pt>
+    <dgm:pt modelId="{CEFCE579-2BCC-4BA4-8CAD-170316CD4477}" type="pres">
+      <dgm:prSet presAssocID="{9385A9A7-CD50-4BEB-A123-1C877E38B565}" presName="text" presStyleLbl="node1" presStyleIdx="0" presStyleCnt="3" custScaleX="805189" custScaleY="106842" custLinFactNeighborX="1115" custLinFactNeighborY="55421">
+        <dgm:presLayoutVars>
+          <dgm:bulletEnabled val="1"/>
+        </dgm:presLayoutVars>
+      </dgm:prSet>
+      <dgm:spPr>
+        <a:prstGeom prst="roundRect">
+          <a:avLst/>
+        </a:prstGeom>
+      </dgm:spPr>
+    </dgm:pt>
+    <dgm:pt modelId="{9B26D8A9-9040-4BFF-AFD5-56F1A284AD72}" type="pres">
+      <dgm:prSet presAssocID="{8A6163E3-A2F7-4C72-A25F-25D40A3ACE70}" presName="space" presStyleCnt="0"/>
+      <dgm:spPr/>
+    </dgm:pt>
+    <dgm:pt modelId="{37414E52-0F80-436A-B2E8-668DBFEFAB21}" type="pres">
+      <dgm:prSet presAssocID="{DA88906E-A8E5-47C7-883D-8C76F1E57EF8}" presName="text" presStyleLbl="node1" presStyleIdx="1" presStyleCnt="3" custScaleX="812254">
+        <dgm:presLayoutVars>
+          <dgm:bulletEnabled val="1"/>
+        </dgm:presLayoutVars>
+      </dgm:prSet>
+      <dgm:spPr>
+        <a:prstGeom prst="roundRect">
+          <a:avLst/>
+        </a:prstGeom>
+      </dgm:spPr>
+    </dgm:pt>
+    <dgm:pt modelId="{10DA89D3-99EB-4E79-AE97-253A0B1C346A}" type="pres">
+      <dgm:prSet presAssocID="{2CB1B4BF-5648-4513-8ED2-BA9067078688}" presName="space" presStyleCnt="0"/>
+      <dgm:spPr/>
+    </dgm:pt>
+    <dgm:pt modelId="{B785D5F0-6B57-43C3-BBF5-F1A9665D985D}" type="pres">
+      <dgm:prSet presAssocID="{2D6BC763-EB35-4D85-87A1-00ABA1A5DC3A}" presName="text" presStyleLbl="node1" presStyleIdx="2" presStyleCnt="3" custScaleX="812254" custLinFactNeighborX="1134" custLinFactNeighborY="-2288">
+        <dgm:presLayoutVars>
+          <dgm:bulletEnabled val="1"/>
+        </dgm:presLayoutVars>
+      </dgm:prSet>
+      <dgm:spPr>
+        <a:prstGeom prst="roundRect">
+          <a:avLst/>
+        </a:prstGeom>
+      </dgm:spPr>
+    </dgm:pt>
+  </dgm:ptLst>
+  <dgm:cxnLst>
+    <dgm:cxn modelId="{3923DB1B-96A7-474F-827A-DC97232BC9D8}" type="presOf" srcId="{DA88906E-A8E5-47C7-883D-8C76F1E57EF8}" destId="{37414E52-0F80-436A-B2E8-668DBFEFAB21}" srcOrd="0" destOrd="0" presId="urn:diagrams.loki3.com/VaryingWidthList"/>
+    <dgm:cxn modelId="{A1CF7231-10F5-484B-A06A-414D2E23ACF3}" type="presOf" srcId="{602C933F-F515-447D-9A06-7339450EEAA0}" destId="{1419425E-CDB1-4BCD-9AB1-6A1716B40398}" srcOrd="0" destOrd="0" presId="urn:diagrams.loki3.com/VaryingWidthList"/>
+    <dgm:cxn modelId="{3B67A584-BBEF-410F-B116-6AFFB5E844E4}" srcId="{602C933F-F515-447D-9A06-7339450EEAA0}" destId="{DA88906E-A8E5-47C7-883D-8C76F1E57EF8}" srcOrd="1" destOrd="0" parTransId="{2A3DF3E7-77D7-4006-8C09-7CCC4E1CB55C}" sibTransId="{2CB1B4BF-5648-4513-8ED2-BA9067078688}"/>
+    <dgm:cxn modelId="{8C889C92-6888-408C-B461-4A30EA1D203B}" type="presOf" srcId="{9385A9A7-CD50-4BEB-A123-1C877E38B565}" destId="{CEFCE579-2BCC-4BA4-8CAD-170316CD4477}" srcOrd="0" destOrd="0" presId="urn:diagrams.loki3.com/VaryingWidthList"/>
+    <dgm:cxn modelId="{E0E15BC2-59E3-433C-AB5C-6622F41433C9}" srcId="{602C933F-F515-447D-9A06-7339450EEAA0}" destId="{9385A9A7-CD50-4BEB-A123-1C877E38B565}" srcOrd="0" destOrd="0" parTransId="{649DCBB0-E6EE-40B1-803F-1BDBDB2A5ED6}" sibTransId="{8A6163E3-A2F7-4C72-A25F-25D40A3ACE70}"/>
+    <dgm:cxn modelId="{BAD7CCC2-DA24-4381-9B4C-24CBAEE77176}" type="presOf" srcId="{2D6BC763-EB35-4D85-87A1-00ABA1A5DC3A}" destId="{B785D5F0-6B57-43C3-BBF5-F1A9665D985D}" srcOrd="0" destOrd="0" presId="urn:diagrams.loki3.com/VaryingWidthList"/>
+    <dgm:cxn modelId="{070A39F8-90A0-421D-B2DA-89359162C0AE}" srcId="{602C933F-F515-447D-9A06-7339450EEAA0}" destId="{2D6BC763-EB35-4D85-87A1-00ABA1A5DC3A}" srcOrd="2" destOrd="0" parTransId="{30687BE3-DB0E-45EF-BCFE-EFF39B056A39}" sibTransId="{707D65F9-1502-4E50-85F1-A964E8A50E8F}"/>
+    <dgm:cxn modelId="{117BF042-A521-4AC5-9E0F-F63AF9489F92}" type="presParOf" srcId="{1419425E-CDB1-4BCD-9AB1-6A1716B40398}" destId="{CEFCE579-2BCC-4BA4-8CAD-170316CD4477}" srcOrd="0" destOrd="0" presId="urn:diagrams.loki3.com/VaryingWidthList"/>
+    <dgm:cxn modelId="{599E7DB1-7401-4FFF-ABB8-8FDE6496BED3}" type="presParOf" srcId="{1419425E-CDB1-4BCD-9AB1-6A1716B40398}" destId="{9B26D8A9-9040-4BFF-AFD5-56F1A284AD72}" srcOrd="1" destOrd="0" presId="urn:diagrams.loki3.com/VaryingWidthList"/>
+    <dgm:cxn modelId="{20262F9F-3DB6-4859-B55B-1C9B504E9796}" type="presParOf" srcId="{1419425E-CDB1-4BCD-9AB1-6A1716B40398}" destId="{37414E52-0F80-436A-B2E8-668DBFEFAB21}" srcOrd="2" destOrd="0" presId="urn:diagrams.loki3.com/VaryingWidthList"/>
+    <dgm:cxn modelId="{87818D21-BCEB-4754-8D44-A8F4720EB21F}" type="presParOf" srcId="{1419425E-CDB1-4BCD-9AB1-6A1716B40398}" destId="{10DA89D3-99EB-4E79-AE97-253A0B1C346A}" srcOrd="3" destOrd="0" presId="urn:diagrams.loki3.com/VaryingWidthList"/>
+    <dgm:cxn modelId="{123F05F6-ABA6-450B-A362-7A06FE6B0077}" type="presParOf" srcId="{1419425E-CDB1-4BCD-9AB1-6A1716B40398}" destId="{B785D5F0-6B57-43C3-BBF5-F1A9665D985D}" srcOrd="4" destOrd="0" presId="urn:diagrams.loki3.com/VaryingWidthList"/>
+  </dgm:cxnLst>
+  <dgm:bg>
+    <a:noFill/>
+  </dgm:bg>
+  <dgm:whole/>
+  <dgm:extLst>
+    <a:ext uri="http://schemas.microsoft.com/office/drawing/2008/diagram">
+      <dsp:dataModelExt xmlns:dsp="http://schemas.microsoft.com/office/drawing/2008/diagram" relId="rId25" minVer="http://schemas.openxmlformats.org/drawingml/2006/diagram"/>
+    </a:ext>
+  </dgm:extLst>
+</dgm:dataModel>
