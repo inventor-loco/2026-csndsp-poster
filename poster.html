@@ -1,0 +1,509 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Energy-Autonomous OCC Node for Intra-Satellite Links | CSNDSP 2026 Poster</title>
+<style>
+    /* ============================================================
+       CSNDSP 2026 POSTER: A1 PORTRAIT (594 mm x 841 mm)
+       Layout follows the official PPTX template:
+         Header (title + authors left, QR top-right)
+         Top band   : The Problem | Fig. 1 | Current Solutions
+         Middle band : Our Contribution (full width, largest)
+         Bottom band : Results (big numbers) | Fig. 2 | Next Steps
+         Footer     : sponsor logos, then acknowledgement strip
+       Print target: A1 portrait (A2 also works: printer "scale to fit").
+       ============================================================ */
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    /* ---- OCC4SAT web fonts (self-hosted, taken from occ4sat.eu) ---- */
+    @font-face {
+        font-family: "GothamPro"; font-weight: 700; font-style: normal; font-display: swap;
+        src: url("fonts/GothamPro-Bold.woff2") format("woff2");
+    }
+    @font-face {
+        font-family: "NotoSansOCC"; font-weight: 100 1000; font-style: normal; font-display: swap;
+        src: url("fonts/NotoSans-variable.woff2") format("woff2");
+    }
+    @font-face {
+        font-family: "NotoSansOCC"; font-weight: 100 1000; font-style: italic; font-display: swap;
+        src: url("fonts/NotoSans-italic-variable.woff2") format("woff2");
+    }
+
+    :root {
+        /* OCC4SAT brand palette (occ4sat.eu) */
+        --navy:      #131722;   /* occ "black"  */
+        --navy-2:    #2B323C;   /* occ "gray"   */
+        --green:     #6CFF72;   /* occ accent   */
+        --blue:      #71A1FF;   /* occ accent   */
+        --purple:    #B871FF;   /* occ accent   */
+        /* aliases kept so existing rules map onto the brand accents */
+        --cyan:      #71A1FF;
+        --cyan-soft: #eef3ff;
+        --amber:     #B871FF;
+        --green-soft:#eefff0;
+        --ink:       #1b2230;
+        --muted:     #5a6675;
+        --paper:     #ffffff;
+        --panel:     #f4f6fa;
+        --panel-line:#dde3ec;
+        --font-display: "GothamPro", "Segoe UI", Arial, sans-serif;
+        --font-body:    "NotoSansOCC", "Segoe UI", Arial, sans-serif;
+
+        /* ---- Logo sizing --------------------------------------------------
+           --logo-h is the base height; tweak each --s-* multiplier to scale a
+           single logo up/down (1 = base). Play with these freely.            */
+        --logo-h:        16mm;
+        --s-csndsp:      2.50;
+        --s-ieee:        1.00;
+        --s-comsoc:      1.80;
+        --s-optica:      1.00;
+        --s-iet:         1.05;
+        --s-iop:         1.00;
+        --s-occ4sat:     1.50;
+        --s-ulpgc:       1.12;
+        --s-argotec:     1.50;
+        --s-pilighting:  1.12;
+        --s-ereca:       1.20;
+    }
+
+    @page { size: A1 portrait; margin: 0; }
+
+    html, body {
+        font-family: var(--font-body);
+        color: var(--ink);
+        background: #4a5568;
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+    }
+    @media screen { body { display: flex; justify-content: center; padding: 24px; } }
+
+    .poster {
+        width: 594mm; height: 841mm;
+        flex: 0 0 auto;
+        background: var(--paper);
+        position: relative; overflow: hidden;
+        display: flex; flex-direction: column;
+        transform-origin: top center;
+    }
+
+    /* =====================  HEADER  ===================== */
+    .header {
+        /* OCC4SAT hero photo (occ4sat.eu) under a dark overlay, as on the site */
+        background:
+            linear-gradient(135deg, rgba(19,23,34,.88) 0%, rgba(43,50,60,.82) 100%),
+            url("occ4sat/hero-bg.jpeg.jpg") center 30% / cover no-repeat;
+        color: #fff;
+        padding: 26mm 16mm 24mm 16mm;
+        display: grid; grid-template-columns: 40mm 1fr 42mm; gap: 11mm;
+        align-items: center; position: relative;
+    }
+    .header::after {
+        content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: 2.5mm;
+        background: linear-gradient(90deg, var(--green) 0%, var(--blue) 50%, var(--purple) 100%);
+    }
+    .header-brand { display: flex; flex-direction: column; align-items: center; gap: 3mm; }
+    .header-brand img { width: 36mm; height: auto; display: block; }
+    .header-brand span {
+        font-family: var(--font-display); font-size: 12pt; font-weight: 700;
+        letter-spacing: 1px; color: #fff;
+    }
+    .eyebrow {
+        font-family: var(--font-display);
+        font-size: 14pt; letter-spacing: 2px; text-transform: uppercase;
+        color: var(--green); font-weight: 700; margin-bottom: 3mm;
+    }
+    .title {
+        font-family: var(--font-display);
+        font-size: 40pt; font-weight: 700; line-height: 1.12; letter-spacing: -0.2px;
+        margin-bottom: 5mm; text-transform: uppercase;
+    }
+    .title .accent { color: var(--purple); }
+    .authors { font-size: 20pt; font-weight: 600; line-height: 1.3; }
+    .affil { font-size: 14.5pt; font-weight: 400; color: #cdddf2; margin-top: 2.5mm; }
+    .contact { font-size: 13pt; color: #a9c2e0; margin-top: 2mm; }
+
+    .header-qr { display: flex; flex-direction: column; align-items: center; gap: 2mm; }
+    .header-qr .qr-box {
+        width: 42mm; height: 42mm; background: #fff; border-radius: 3mm; padding: 2.5mm;
+        display: flex; align-items: center; justify-content: center;
+        color: var(--muted); font-size: 10pt; font-weight: 600; text-align: center;
+    }
+    .header-qr .qr-box img { width: 100%; height: 100%; object-fit: contain; }
+    .header-qr .qr-cap { font-size: 9.5pt; color: #a9c2e0; letter-spacing: .5px; }
+
+    /* =====================  CONTENT BANDS  ===================== */
+    .content {
+        flex: 1; display: flex; flex-direction: column;
+        gap: 8mm; padding: 9mm 16mm; min-height: 0;
+    }
+    .band {
+        flex: 1 1 auto;                 /* share leftover height with the hero band */
+        display: grid; grid-template-columns: 1fr 1.06fr 1fr; gap: 8mm;
+    }
+    .band > * { min-width: 0; }
+    .band-top    { grid-template-columns: 30fr 40fr 30fr; }   /* Problem | Fig.1 | Current Solutions */
+    .band-bottom { grid-template-columns: 30fr 30fr 40fr; }   /* Results | Fig.4 | Next Steps */
+
+    /* ----- cards ----- */
+    .card {
+        background: var(--panel); border: 1px solid var(--panel-line);
+        border-radius: 3mm; padding: 6mm 6.5mm;
+        display: flex; flex-direction: column;
+    }
+
+    .sec-head { display: flex; align-items: center; gap: 4.5mm; margin-bottom: 4.5mm; }
+    .sec-num {
+        flex: 0 0 auto; width: 11mm; height: 11mm; border-radius: 50%;
+        background: var(--navy); color: #fff;
+        display: flex; align-items: center; justify-content: center;
+        font-size: 16pt; font-weight: 800;
+    }
+    .sec-title {
+        font-family: var(--font-display);
+        font-size: 25pt; font-weight: 700; color: var(--navy); line-height: 1.1;
+        text-transform: uppercase; letter-spacing: .2px;
+    }
+
+    .card p { font-size: 17.5pt; line-height: 1.45; margin-bottom: 3mm; }
+    .card p:last-child { margin-bottom: 0; }
+    .card ul { list-style: none; margin: 0; }
+    .card li {
+        font-size: 17.5pt; line-height: 1.4; padding-left: 7.5mm;
+        position: relative; margin-bottom: 3mm;
+    }
+    .card li:last-child { margin-bottom: 0; }
+    .card li::before {
+        content: ""; position: absolute; left: 0; top: 2.4mm;
+        width: 3.4mm; height: 3.4mm; border-radius: 50%; background: var(--cyan);
+    }
+    .card li.amber::before { background: var(--amber); }
+    strong { color: var(--navy); }
+    .lead { color: var(--navy-2); font-weight: 600; }
+
+    .highlight {
+        background: var(--cyan-soft); border-left: 4px solid var(--cyan);
+        padding: 4mm 4.5mm; border-radius: 2mm; margin-top: 4mm;
+        font-size: 15.5pt; line-height: 1.4;
+    }
+
+    /* ----- centre-column figures ----- */
+    .figcell {
+        display: flex; flex-direction: column; justify-content: center;
+    }
+    figure {
+        background: #fff; border: 1px solid var(--panel-line);
+        border-radius: 3mm; padding: 5mm; margin: 0;
+    }
+    figure img {
+        width: auto; max-width: 100%; height: auto; max-height: 128mm;
+        display: block; margin: 0 auto; border-radius: 2mm;
+    }
+    figure.photo img { border: 1px solid var(--panel-line); }
+    figcaption { font-size: 13pt; color: var(--muted); line-height: 1.4; margin-top: 3.5mm; }
+    figcaption b { color: var(--navy); }
+
+    /* =====================  OUR CONTRIBUTION (hero)  ===================== */
+    .contribution {
+        flex: 1.55 1 auto;              /* largest section (matches PPTX proportions) */
+        background: var(--green-soft);
+        border: 2px solid var(--green);
+        border-radius: 4mm;
+        padding: 7mm 8mm;
+        display: flex; flex-direction: column; justify-content: center;
+    }
+    .contribution .sec-num { background: var(--green); color: var(--navy); }
+    .contribution .sec-title { color: var(--navy); }
+    .contribution .lead { font-size: 18pt; color: var(--navy-2); font-weight: 600; margin-bottom: 5mm; }
+    .contrib-body { display: grid; grid-template-columns: 1.25fr 1fr; gap: 9mm; align-items: start; }
+    .contrib-body ul { margin: 0; }
+    .contrib-figrow {
+        display: grid; grid-template-columns: 1fr 1fr; gap: 8mm;
+        margin-top: 6mm;
+    }
+    .contrib-figrow figure { background: #fff; display: flex; flex-direction: column; }
+    .contrib-figrow figure img { width: auto; max-width: 100%; max-height: 138mm; margin: 0 auto; }
+    .spec {
+        background: #fff; border: 1px solid var(--panel-line);
+        border-radius: 2mm; padding: 4mm 4.5mm;
+    }
+    .spec-title {
+        font-family: var(--font-display);
+        font-size: 14pt; font-weight: 700; color: var(--navy);
+        text-transform: uppercase; letter-spacing: .6px; margin-bottom: 2.5mm;
+    }
+    .spec ul { list-style: none; }
+    .spec li {
+        font-size: 15pt; line-height: 1.35; padding-left: 6.5mm;
+        position: relative; margin-bottom: 1.8mm;
+    }
+    .spec li:last-child { margin-bottom: 0; }
+    .spec li::before {
+        content: ""; position: absolute; left: 0; top: 2mm;
+        width: 3mm; height: 3mm; border-radius: 50%; background: var(--green);
+    }
+
+    /* =====================  RESULTS: big numbers (lower-left)  ===================== */
+    .results .stat-grid {
+        display: grid; grid-template-columns: 1fr 1fr; gap: 5mm; margin-bottom: 4mm;
+    }
+    .stat {
+        background: var(--navy); color: #fff; border-radius: 2.5mm;
+        padding: 4mm 3mm; text-align: center;
+    }
+    .stat-value { font-family: var(--font-display); font-size: 32pt; font-weight: 700; line-height: 1; }
+    .stat-value .u { font-size: 15pt; font-weight: 700; color: var(--green); }
+    .stat-label {
+        font-size: 11.5pt; color: #b8cbe4; margin-top: 2mm;
+        text-transform: uppercase; letter-spacing: .3px; line-height: 1.2;
+    }
+    .results .note { font-size: 15pt; line-height: 1.4; }
+    .results .equation {
+        text-align: center; font-family: Cambria, Georgia, serif; font-style: italic;
+        font-size: 16.5pt; color: var(--navy); margin-top: 3mm;
+    }
+    .results .equation sub { font-size: 9pt; }
+
+    /* =====================  MERGED LOGO BAND (page bottom)  ===================== */
+    .logos {
+        border-top: 2.5mm solid;
+        border-image: linear-gradient(90deg, var(--green), var(--blue), var(--purple)) 1;
+        /* hard split: bright sponsors 60% | dark OCC4SAT consortium 40% */
+        background: linear-gradient(90deg,
+            #fff 0 60%, var(--navy) 60% 100%);
+        padding: 3.5mm 16mm;
+        display: flex; align-items: stretch;
+    }
+    /* two titled groups: Sponsors (bright) | OCC4SAT Consortium (dark) */
+    .logo-group { display: flex; flex-direction: column; gap: 2mm; }
+    .logo-group.sponsors   { flex: 6; padding-right: 8mm; }
+    .logo-group.consortium { flex: 4; padding-left: 8mm; }
+    .group-title {
+        font-family: var(--font-display); font-weight: 700;
+        font-size: 12.5pt; letter-spacing: 1px; text-transform: uppercase;
+        text-align: center;
+    }
+    .logo-group.sponsors   .group-title { color: var(--navy); }
+    .logo-group.consortium .group-title { color: var(--green); }
+    .group-row {
+        flex: 1; display: flex; align-items: center;
+        justify-content: space-around; gap: 6mm;
+    }
+    /* one flex cell per logo, so scaling never changes the row layout */
+    .logos .cell { display: flex; align-items: center; justify-content: center; }
+    .logos img { width: auto; max-width: 100%; object-fit: contain; display: block; }
+
+    .logos .csndsp     { height: calc(var(--logo-h) * var(--s-csndsp)); }
+    .logos .ieee       { height: calc(var(--logo-h) * var(--s-ieee)); }
+    .logos .comsoc     { height: calc(var(--logo-h) * var(--s-comsoc)); }
+    .logos .optica     { height: calc(var(--logo-h) * var(--s-optica)); }
+    .logos .iet        { height: calc(var(--logo-h) * var(--s-iet)); }
+    .logos .iop        { height: calc(var(--logo-h) * var(--s-iop)); }
+    .logos .occ4sat    { height: calc(var(--logo-h) * var(--s-occ4sat)); }
+    .logos .ulpgc      { height: calc(var(--logo-h) * var(--s-ulpgc)); }
+    .logos .argotec    { height: calc(var(--logo-h) * var(--s-argotec)); }
+    .logos .pilighting { height: calc(var(--logo-h) * var(--s-pilighting)); }
+    .logos .ereca      { height: calc(var(--logo-h) * var(--s-ereca)); }
+
+    .ack-strip {
+        background: var(--navy); color: #b7c0cf;
+        padding: 4mm 18mm 5mm; font-size: 11pt; line-height: 1.4; text-align: justify;
+        border-top: 1px solid rgba(255,255,255,.12);
+    }
+    .ack-strip .ack-label { color: var(--green); font-weight: 700; text-transform: uppercase; letter-spacing: .5px; }
+    .ack-strip b { color: #fff; }
+
+    @media print {
+        html, body { background: #fff; margin: 0; padding: 0; display: block; }
+        .poster { transform: none !important; box-shadow: none; }
+    }
+</style>
+</head>
+<body>
+<div class="poster" id="poster">
+
+    <!-- ==================== HEADER ==================== -->
+    <header class="header">
+        <div class="header-brand">
+            <img src="occ4sat/occ4sat-logo-white.svg" alt="OCC4SAT">
+            <span>OCC4SAT</span>
+        </div>
+        <div class="header-text">
+            <div class="eyebrow">International Symposium on Communication Systems, Networks and Digital Signal Processing 2026 · Edinburgh</div>
+            <h1 class="title">Energy-Autonomous <span class="accent">Optical Camera Communication</span> Node for Intra-Satellite Links</h1>
+            <div class="authors">Vicente Matus · Jaime Aranda · Rafael Perez-Jimenez · Jose Rabadan</div>
+            <div class="affil">IDeTIC, Universidad de Las Palmas de Gran Canaria · PCT Tafira 35017, Las Palmas, Spain</div>
+            <div class="contact">vicente.matus@ulpgc.es · jaime.aranda@fpct.ulpgc.es · rafael.perez@ulpgc.es · jose.rabadan@ulpgc.es</div>
+        </div>
+        <div class="header-qr">
+            <div class="qr-box" id="qrBox"><img src="figs/qr.png" alt="Scan for digital poster"></div>
+            <div class="qr-cap">Scan for PDF</div>
+        </div>
+    </header>
+
+    <!-- ==================== CONTENT ==================== -->
+    <main class="content">
+
+        <!-- ===== TOP BAND: Problem | Fig.1 | Current Solutions ===== -->
+        <section class="band band-top">
+
+            <div class="card">
+                <div class="sec-head"><span class="sec-num">1</span><span class="sec-title">The Problem</span></div>
+                <ul>
+                    <li>Intra-satellite links are still mostly <strong>wired harnesses</strong>: added mass, poor modularity, and costly re-qualification (updated Test Procedures, Test Readiness Reviews) whenever a subsystem is moved.</li>
+                    <li><strong>Optical Camera Communication (OCC)</strong> reuses ordinary LEDs as transmitters and cameras as receivers, yet transmitter energy is ignored: it is assumed permanently powered.</li>
+                    <li>A node that is wireless for <em>both</em> power and data remains unproven for spacecraft interiors.</li>
+                </ul>
+            </div>
+
+            <div class="figcell">
+                <figure>
+                    <img src="figs/fig_block_diagram.png" alt="Functional block diagram of the energy-autonomous OCC node">
+                    <figcaption><b>Fig. 1: Node architecture.</b> Energy path: illumination → PV cell → ultracapacitor drives an MCU + LED transmitter; bursts reach the camera receiver + CPU (vision + DSP). No power-bus connection.</figcaption>
+                </figure>
+            </div>
+
+            <div class="card">
+                <div class="sec-head"><span class="sec-num">2</span><span class="sec-title">Current Solutions</span></div>
+                <ul>
+                    <li><strong>Wired RF &amp; harness links:</strong> power-dependent, rigid topology, added mass.</li>
+                    <li><strong>Photodiode optical links:</strong> wide field of view causes cross-talk, reintroducing placement constraints.</li>
+                    <li><strong>Solar-as-receiver VLC:</strong> harvests <em>while receiving</em>; the reverse, a transmitter on harvested light, is unexplored.</li>
+                    <li><strong>Continuously-powered OCC transmitters:</strong> no energy autonomy.</li>
+                </ul>
+            </div>
+
+        </section>
+
+        <!-- ===== MIDDLE BAND: Our Contribution (hero) ===== -->
+        <section class="card contribution">
+            <div class="sec-head"><span class="sec-num">3</span><span class="sec-title">Our Contribution</span></div>
+
+            <p class="lead">An energy-autonomous OCC transmitter node, powered solely by harvested optical energy and validated on a laboratory demonstrator.</p>
+
+            <div class="contrib-body">
+                <div>
+                    <ul>
+                        <li><strong>Photovoltaic harvesting</strong> of ambient optical energy, stored in a 5 F ultracapacitor.</li>
+                        <li class="amber"><strong>Threshold-triggered bursts:</strong> a hysteresis policy switches the node ON at V<sub>high</sub> ≈ 3.3 V and OFF at V<sub>low</sub> ≈ 3.0 V, with no prior knowledge of the harvesting cycle.</li>
+                        <li><strong>Wireless for power &amp; data:</strong> free placement inside the spacecraft, with no harness routing or re-qualification.</li>
+                        <li class="amber"><strong>Camera spatial segregation:</strong> each transmitter occupies distinct pixels, so many autonomous nodes coexist without cross-talk.</li>
+                    </ul>
+                    <div class="highlight"><strong>Key insight:</strong> energy availability, not modulation, governs the effective throughput, motivating <em>energy-aware</em> OCC design for modular spacecraft subsystems.</div>
+                </div>
+
+                <div class="spec">
+                    <div class="spec-title">Prototype at a glance</div>
+                    <ul>
+                        <li><strong>PV cell:</strong> Mikroelektronika SW0.4M, 0.4 W (V<sub>mp</sub> 4.0 V, I<sub>mp</sub> 100 mA)</li>
+                        <li><strong>Storage:</strong> 5 F ultracapacitor</li>
+                        <li><strong>MCU:</strong> Arduino Nano Every (ATmega4809), ≈18–20 mA active</li>
+                        <li><strong>Link:</strong> single LED, OOK @ 15 bps → Raspberry Pi Camera v2 @ 30 fps, 1000 µs exposure</li>
+                        <li><strong>Regime:</strong> line-of-sight, dark-room, TRL-5-oriented proof of concept within <strong>OCC4SAT</strong></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="contrib-figrow">
+                <figure>
+                    <img src="figs/fig_state_diagram.png" alt="Operating-state diagram of the autonomous node">
+                    <figcaption><b>Fig. 2: Charge–activate–transmit cycle.</b> Burst-mode transmission occurs only when enough energy is stored between the two ultracapacitor voltage thresholds, giving repeatable charge–transmit operation.</figcaption>
+                </figure>
+                <figure class="photo">
+                    <img src="figs/fig_setup_overview.png" alt="Laboratory experimental setup on an optical breadboard">
+                    <figcaption><b>Fig. 3: Laboratory setup.</b> Dark-room optical breadboard: an LED lamp illuminates the PV cell; the Arduino LED transmitter emits OOK bursts captured by the camera and decoded offline. Aluminium tape emulates a satellite panel.</figcaption>
+                </figure>
+            </div>
+        </section>
+
+        <!-- ===== BOTTOM BAND: Results | Fig.4 | Next Steps ===== -->
+        <section class="band band-bottom">
+
+            <div class="card results">
+                <div class="sec-head"><span class="sec-num">4</span><span class="sec-title">Results</span></div>
+                <div class="stat-grid">
+                    <div class="stat"><div class="stat-value">199<span class="u"> s</span></div><div class="stat-label">Charge / Cycle</div></div>
+                    <div class="stat"><div class="stat-value">21<span class="u"> s</span></div><div class="stat-label">Burst Duration</div></div>
+                    <div class="stat"><div class="stat-value">315<span class="u"> bit</span></div><div class="stat-label">Payload / Burst</div></div>
+                    <div class="stat"><div class="stat-value">9.6<span class="u"> %</span></div><div class="stat-label">Duty Cycle</div></div>
+                    <div class="stat"><div class="stat-value">1.43<span class="u"> bps</span></div><div class="stat-label">Throughput</div></div>
+                    <div class="stat"><div class="stat-value">&lt;2<span class="u">·10⁻⁵</span></div><div class="stat-label">Bit Error Rate</div></div>
+                </div>
+                <p class="note">Over a <strong>10-hour run (≈163 cycles)</strong>, all 51,345 delivered bits decoded correctly. Charge energy ≈ 4.7 J per cycle.</p>
+                <div class="equation">E<sub>stored</sub> = ½ C (V<sub>high</sub>² − V<sub>low</sub>²) ≈ 4.7 J → E<sub>bit</sub> ≈ 14.9 mJ/bit</div>
+            </div>
+
+            <div class="figcell">
+                <figure>
+                    <img src="figs/relay_histogram.png" alt="Histogram of relay state durations">
+                    <figcaption><b>Fig. 4: Bimodal dwell times.</b> A two-component Gaussian mixture cleanly separates the ON (discharge, 21 s) and OFF (recharge, 199 s) phases, confirming repeatable autonomous cycling at a ≈10:1 ratio.</figcaption>
+                </figure>
+            </div>
+
+            <div class="card">
+                <div class="sec-head"><span class="sec-num">5</span><span class="sec-title">Next Steps</span></div>
+                <p>Burst operation is a <strong>design feature</strong> matched to low-duty-cycle intra-satellite telemetry, not a limitation.</p>
+                <ul>
+                    <li>Scale throughput by <strong>spatial multiplexing</strong>: hundreds of ROIs per colour channel.</li>
+                    <li>Self-powered comparator to replace external threshold circuitry (flight-ready).</li>
+                    <li>Reflective (non-LoS) links and real machined-aluminium panels.</li>
+                    <li>On-orbit validation toward higher TRL within OCC4SAT.</li>
+                </ul>
+            </div>
+
+        </section>
+    </main>
+
+    <!-- ==================== MERGED LOGO BAND (conference sponsors + OCC4SAT consortium) ====================
+         Tune the size of any single logo via its --s-* variable in :root above. -->
+    <div class="logos">
+        <div class="logo-group sponsors">
+            <div class="group-title">Sponsors</div>
+            <div class="group-row">
+                <div class="cell"><img class="csndsp" src="2026csndsp-logo.png" alt="CSNDSP 2026"></div>
+                <div class="cell"><img class="ieee" src="ieee-logo.png" alt="IEEE"></div>
+                <div class="cell"><img class="comsoc" src="comsoc-logo.png" alt="IEEE Communications Society"></div>
+                <div class="cell"><img class="optica" src="optica-logo.png" alt="Optica"></div>
+                <div class="cell"><img class="iet" src="iet-logo.png" alt="IET"></div>
+                <div class="cell"><img class="iop" src="iop-london-logo.jpg" alt="IOP Optical Group"></div>
+            </div>
+        </div>
+        <div class="logo-group consortium">
+            <div class="group-title">OCC4SAT Consortium</div>
+            <div class="group-row">
+                <div class="cell"><img class="occ4sat" src="occ4sat/occ4sat-logo-white.svg" alt="OCC4SAT"></div>
+                <div class="cell"><img class="ulpgc" src="occ4sat/ulpgc.png" alt="Universidad de Las Palmas de Gran Canaria"></div>
+                <div class="cell"><img class="argotec" src="occ4sat/argotec.png" alt="Argotec"></div>
+                <div class="cell"><img class="pilighting" src="occ4sat/pi_lighting.png" alt="Pi Lighting"></div>
+                <div class="cell"><img class="ereca" src="occ4sat/ereca.png" alt="E.RE.C.A"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ==================== ACKNOWLEDGEMENTS (very bottom, full-width) ==================== -->
+    <div class="ack-strip">
+        <span class="ack-label">Acknowledgements &amp; Funding:</span>
+        This work has received funding from the European Union's Horizon Europe innovation programme under the <b>OCC4SAT</b> project (Grant Agreement No. 101135434), including top-up funding by SERI. Supported by the OCCAM project (PID2020-114561RB-100) and SUCCESS (TED2021-130049B-C21) of the Agencia Estatal de Investigación (AEI, Spanish Government), and by Grant Catalina Ruiz (APCR2022010014) from the Agencia Canaria de Investigación, Innovación y Sociedad de la Información (ACIISI) under the European Social Fund.
+    </div>
+
+</div>
+
+<script>
+    /* Fit the fixed A1 poster into the viewport for on-screen preview only.
+       Printing is unaffected (uses the real A1 @page geometry). */
+    function fitPoster() {
+        if (window.matchMedia('print').matches) return;
+        var poster = document.getElementById('poster');
+        poster.style.transform = 'none';
+        var pw = poster.offsetWidth, ph = poster.offsetHeight;
+        var scale = Math.min(1, (window.innerWidth - 48) / pw);
+        poster.style.transform = 'scale(' + scale + ')';
+        document.body.style.height = (ph * scale + 48) + 'px';
+    }
+    window.addEventListener('load', fitPoster);
+    window.addEventListener('resize', fitPoster);
+</script>
+</body>
+</html>

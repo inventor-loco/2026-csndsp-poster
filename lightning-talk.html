@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lightning Talk · Energy-Autonomous OCC Node | CSNDSP 2026</title>
+<style>
+    /* ============================================================
+       CSNDSP 2026 · 3-MINUTE LIGHTNING TALK  (16:9 slide deck)
+       Slides follow the official Lightning Talk Template:
+         1. Title
+         2. Research Background / Problem Statement
+         3. Key Contributions of this Work
+         4. Find Out More! (contacts, authors, acknowledgements,
+            references, QR)
+       Aesthetics + assets reused from the CSNDSP 2026 poster
+       (OCC4SAT brand palette + web fonts).
+       Navigate: ← / → arrows, Space, or on-screen dots. F = fullscreen.
+       ============================================================ */
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    /* ---- OCC4SAT web fonts (self-hosted, from occ4sat.eu) ---- */
+    @font-face {
+        font-family: "GothamPro"; font-weight: 700; font-style: normal; font-display: swap;
+        src: url("fonts/GothamPro-Bold.woff2") format("woff2");
+    }
+    @font-face {
+        font-family: "NotoSansOCC"; font-weight: 100 1000; font-style: normal; font-display: swap;
+        src: url("fonts/NotoSans-variable.woff2") format("woff2");
+    }
+    @font-face {
+        font-family: "NotoSansOCC"; font-weight: 100 1000; font-style: italic; font-display: swap;
+        src: url("fonts/NotoSans-italic-variable.woff2") format("woff2");
+    }
+
+    :root {
+        --navy:      #131722;
+        --navy-2:    #2B323C;
+        --green:     #6CFF72;
+        --blue:      #71A1FF;
+        --purple:    #B871FF;
+        --cyan:      #71A1FF;
+        --cyan-soft: #eef3ff;
+        --amber:     #B871FF;
+        --green-soft:#eefff0;
+        --ink:       #1b2230;
+        --muted:     #5a6675;
+        --paper:     #ffffff;
+        --panel:     #f4f6fa;
+        --panel-line:#dde3ec;
+        --font-display: "GothamPro", "Segoe UI", Arial, sans-serif;
+        --font-body:    "NotoSansOCC", "Segoe UI", Arial, sans-serif;
+    }
+
+    html, body {
+        font-family: var(--font-body); color: var(--ink);
+        background: #10141d; height: 100%; overflow: hidden;
+    }
+
+    /* ---- deck stage: 16:9, scaled to fit the viewport ---- */
+    .stage {
+        position: fixed; inset: 0;
+        display: flex; align-items: center; justify-content: center;
+    }
+    .deck {
+        width: 1280px; height: 720px; position: relative;
+        transform-origin: center center;
+        box-shadow: 0 24px 80px rgba(0,0,0,.55);
+    }
+
+    .slide {
+        position: absolute; inset: 0;
+        background: var(--paper);
+        display: none; flex-direction: column;
+        overflow: hidden;
+    }
+    .slide.active { display: flex; }
+
+    /* accent hairline shared by content slides */
+    .accent-bar {
+        height: 6px; flex: 0 0 auto;
+        background: linear-gradient(90deg, var(--green) 0%, var(--blue) 50%, var(--purple) 100%);
+    }
+
+    /* ===================== SLIDE HEADER (content slides) ===================== */
+    .s-head {
+        display: flex; align-items: center; gap: 20px;
+        padding: 30px 56px 0 56px; flex: 0 0 auto;
+    }
+    .s-head .s-logo { margin-left: auto; height: 96px; width: auto; display: block; }
+    .s-num {
+        flex: 0 0 auto; width: 54px; height: 54px; border-radius: 50%;
+        background: var(--navy); color: #fff;
+        display: flex; align-items: center; justify-content: center;
+        font-size: 26px; font-weight: 800; font-family: var(--font-display);
+    }
+    .s-title {
+        font-family: var(--font-display); font-size: 34px; font-weight: 700;
+        color: var(--navy); line-height: 1.08; text-transform: uppercase; letter-spacing: .3px;
+    }
+    .s-kicker { font-size: 15px; color: var(--muted); letter-spacing: 1px; text-transform: uppercase; margin-top: 3px; }
+
+    .s-body {
+        flex: 1; min-height: 0; padding: 26px 56px 30px 56px;
+        display: flex; flex-direction: column; justify-content: center;
+    }
+
+    /* ===================== TITLE SLIDE ===================== */
+    .title-slide {
+        color: #fff; justify-content: space-between;
+        background:
+            linear-gradient(135deg, rgba(19,23,34,.90) 0%, rgba(43,50,60,.84) 100%),
+            url("occ4sat/hero-bg.jpeg.jpg") center 30% / cover no-repeat;
+    }
+    .title-slide .accent-bar { order: 3; }
+    .ts-top {
+        display: flex; align-items: center; justify-content: space-between;
+        padding: 40px 56px 0 56px;
+    }
+    .ts-brand { display: flex; align-items: center; gap: 16px; }
+    .ts-brand img { height: 62px; }
+    .ts-brand span { font-family: var(--font-display); font-weight: 700; font-size: 20px; letter-spacing: 1px; }
+    .ts-event { display: flex; align-items: center; }
+    .ts-event img {
+        height: 148px; width: auto; display: block;
+        background: #fff; border-radius: 8px; padding: 8px 12px;
+    }
+
+    .ts-main { padding: 0 56px; }
+    .ts-eyebrow {
+        font-family: var(--font-display); font-size: 15px; letter-spacing: 3px;
+        text-transform: uppercase; color: var(--green); font-weight: 700; margin-bottom: 16px;
+    }
+    .ts-title {
+        font-family: var(--font-display); font-size: 50px; font-weight: 700;
+        line-height: 1.1; text-transform: uppercase; letter-spacing: -.3px;
+    }
+    .ts-title .accent { color: var(--purple); }
+
+    .ts-authors { padding: 0 56px 40px 56px; }
+    .ts-presenter { font-size: 23px; font-weight: 700; }
+    .ts-presenter .role { color: var(--green); font-weight: 700; font-size: 15px; text-transform: uppercase; letter-spacing: 1px; margin-right: 10px; }
+    .ts-coauthors { font-size: 16px; color: #cdddf2; margin-top: 8px; line-height: 1.5; }
+    .ts-affil { font-size: 15px; color: #a9c2e0; margin-top: 10px; }
+
+    /* ===================== lists / cards ===================== */
+    ul.big { list-style: none; }
+    ul.big li {
+        font-size: 21px; line-height: 1.4; padding-left: 34px;
+        position: relative; margin-bottom: 18px;
+    }
+    ul.big li:last-child { margin-bottom: 0; }
+    ul.big li::before {
+        content: ""; position: absolute; left: 0; top: 9px;
+        width: 14px; height: 14px; border-radius: 50%; background: var(--cyan);
+    }
+    ul.big li.amber::before { background: var(--amber); }
+    ul.big li.green::before { background: var(--green); }
+    strong { color: var(--navy); }
+    em { color: var(--navy-2); font-style: italic; }
+    .cite {
+        font-size: .62em; font-weight: 700; color: var(--blue);
+        vertical-align: super; padding-left: 2px; white-space: nowrap;
+    }
+
+    .lead { font-size: 23px; font-weight: 600; color: var(--navy-2); margin-bottom: 22px; line-height: 1.35; }
+
+    .two-col { display: grid; grid-template-columns: 1.15fr .85fr; gap: 40px; align-items: center; height: 100%; }
+    .figbox {
+        background: #fff; border: 1px solid var(--panel-line); border-radius: 10px;
+        padding: 16px; text-align: center;
+    }
+    .figbox img { max-width: 100%; max-height: 300px; border-radius: 6px; }
+    .figcap { font-size: 13px; color: var(--muted); margin-top: 10px; line-height: 1.35; text-align: left; }
+    .figcap b { color: var(--navy); }
+
+    .highlight {
+        background: var(--green-soft); border-left: 5px solid var(--green);
+        padding: 16px 18px; border-radius: 8px; margin-top: 22px;
+        font-size: 18px; line-height: 1.4;
+    }
+
+    /* ---- results stat chips (contribution slide) ---- */
+    .stat-row { display: flex; gap: 14px; margin-top: 6px; }
+    .stat {
+        flex: 1; background: var(--navy); color: #fff; border-radius: 8px;
+        padding: 14px 8px; text-align: center;
+    }
+    .stat-value { font-family: var(--font-display); font-size: 30px; font-weight: 700; line-height: 1; }
+    .stat-value .u { font-size: 15px; color: var(--green); }
+    .stat-label { font-size: 11px; color: #b8cbe4; margin-top: 7px; text-transform: uppercase; letter-spacing: .4px; line-height: 1.2; }
+
+    /* ===================== FIND OUT MORE slide ===================== */
+    .fom { display: grid; grid-template-columns: 1.35fr .65fr; gap: 46px; height: 100%; align-items: start; }
+    .fom h3 {
+        font-family: var(--font-display); font-size: 16px; font-weight: 700; color: var(--navy);
+        text-transform: uppercase; letter-spacing: 1px; margin: 0 0 8px;
+        padding-bottom: 5px; border-bottom: 2px solid var(--panel-line);
+    }
+    .fom-block { margin-bottom: 20px; }
+    .fom p { font-size: 15px; line-height: 1.5; color: var(--ink); }
+    .fom p b { color: var(--navy); }
+    .fom .muted { color: var(--muted); font-size: 14px; }
+    .fom-grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 26px; }
+    .fom ol { margin: 0; padding-left: 20px; }
+    .fom ol li { font-size: 13.5px; line-height: 1.45; color: var(--muted); margin-bottom: 4px; }
+    .qr-side { text-align: center; }
+    .qr-side .qr-box {
+        width: 210px; height: 210px; background: #fff; border: 1px solid var(--panel-line);
+        border-radius: 12px; padding: 12px; margin: 0 auto;
+    }
+    .qr-side .qr-box img { width: 100%; height: 100%; object-fit: contain; }
+    .qr-side .qr-cap {
+        font-family: var(--font-display); font-size: 15px; font-weight: 700; color: var(--navy);
+        text-transform: uppercase; letter-spacing: 1px; margin-top: 14px;
+    }
+    .qr-side .qr-sub { font-size: 13px; color: var(--muted); margin-top: 4px; }
+
+    /* ---- logo strip (bottom of Find Out More) ---- */
+    .logo-strip {
+        flex: 0 0 auto; display: flex; align-items: center; justify-content: center; gap: 48px;
+        padding: 22px 56px; background: var(--navy);
+    }
+    .logo-strip img { height: 46px; object-fit: contain; }
+    .logo-strip img.tall { height: 68px; }
+
+    /* ===================== nav / chrome ===================== */
+    .nav {
+        position: fixed; bottom: 18px; left: 50%; transform: translateX(-50%);
+        display: flex; align-items: center; gap: 14px; z-index: 10;
+        background: rgba(19,23,34,.72); padding: 8px 16px; border-radius: 999px;
+        backdrop-filter: blur(6px);
+    }
+    .nav button {
+        background: none; border: none; color: #fff; font-size: 20px; cursor: pointer;
+        width: 30px; height: 30px; border-radius: 50%; line-height: 1;
+    }
+    .nav button:hover { background: rgba(255,255,255,.15); }
+    .dots { display: flex; gap: 9px; }
+    .dot { width: 10px; height: 10px; border-radius: 50%; background: rgba(255,255,255,.35); cursor: pointer; }
+    .dot.active { background: var(--green); }
+    .pageno { position: fixed; bottom: 20px; right: 24px; color: rgba(255,255,255,.5); font-size: 13px; z-index: 10; }
+</style>
+</head>
+<body>
+
+<div class="stage">
+  <div class="deck" id="deck">
+
+    <!-- ==================== SLIDE 1 · TITLE ==================== -->
+    <section class="slide title-slide active">
+        <div class="ts-top">
+            <div class="ts-brand">
+                <img src="occ4sat/occ4sat-logo-white.svg" alt="OCC4SAT">
+                <span>OCC4SAT</span>
+            </div>
+            <div class="ts-event">
+                <img src="2026csndsp-logo.png" alt="CSNDSP 2026">
+            </div>
+        </div>
+
+        <div class="ts-main">
+            <div class="ts-eyebrow">15th International Symposium on Communication Systems, Networks &amp; Digital Signal Processing · Edinburgh 2026</div>
+            <h1 class="ts-title">Energy-Autonomous <span class="accent">Optical Camera Communication</span> Node for Intra-Satellite Links</h1>
+        </div>
+
+        <div class="ts-authors">
+            <div class="ts-presenter"><span class="role">Presenting</span>Vicente Matus <span style="font-weight:400;color:#a9c2e0;">, IDeTIC, Universidad de Las Palmas de Gran Canaria</span></div>
+            <div class="ts-coauthors">Jaime Aranda · Rafael Perez-Jimenez · Jose Rabadan</div>
+            <div class="ts-affil">IDeTIC, ULPGC · PCT Tafira 35017, Las Palmas, Spain · vicente.matus@ulpgc.es</div>
+        </div>
+
+        <div class="accent-bar"></div>
+    </section>
+
+    <!-- ==================== SLIDE 2 · BACKGROUND / PROBLEM ==================== -->
+    <section class="slide">
+        <div class="accent-bar"></div>
+        <div class="s-head">
+            <span class="s-num">1</span>
+            <div>
+                <div class="s-title">Problem Statement</div>
+            </div>
+            <img class="s-logo" src="2026csndsp-logo.png" alt="CSNDSP 2026">
+        </div>
+        <div class="s-body">
+            <div class="two-col">
+                <div>
+                    <ul class="big">
+                        <li>Intra-satellite links are still mostly <strong>wired harnesses</strong>: added mass, poor modularity, and costly re-qualification whenever a subsystem moves.<span class="cite">[1]</span></li>
+                        <li><strong>Optical Camera Communication (OCC)</strong> reuses ordinary LEDs as transmitters and cameras as receivers, but transmitter energy is ignored, assumed permanently powered.<span class="cite">[2]</span></li>
+                        <li class="amber">Solar cells have served as VLC <em>receivers</em> that harvest while decoding<span class="cite">[3]</span>; the reverse, a <em>transmitter</em> on harvested optical energy, remains unproven for spacecraft interiors.</li>
+                    </ul>
+                </div>
+                <div class="figbox">
+                    <img src="figs/fig_block_diagram.png" alt="Node architecture block diagram">
+                    <div class="figcap"><b>Node architecture.</b> Illumination → PV cell → ultracapacitor drives an MCU + LED transmitter; bursts reach the camera receiver. No power-bus connection.</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==================== SLIDE 3 · KEY CONTRIBUTIONS ==================== -->
+    <section class="slide">
+        <div class="accent-bar"></div>
+        <div class="s-head">
+            <span class="s-num">2</span>
+            <div>
+                <div class="s-title">Key Contributions of this Work</div>
+            </div>
+            <img class="s-logo" src="2026csndsp-logo.png" alt="CSNDSP 2026">
+        </div>
+        <div class="s-body">
+            <p class="lead">An energy-autonomous OCC transmitter node, powered <strong>solely by harvested optical energy</strong> and validated on a laboratory demonstrator.</p>
+            <div class="two-col">
+                <div>
+                    <ul class="big">
+                        <li class="green"><strong>Photovoltaic harvesting</strong> stored in a 5&nbsp;F ultracapacitor drives threshold-triggered bursts (ON ≈ 3.3&nbsp;V, OFF ≈ 3.0&nbsp;V); first adaptation of autonomous OCC<span class="cite">[4]</span> to intra-satellite links.</li>
+                        <li class="green"><strong>Wireless for power &amp; data:</strong> free placement inside the spacecraft, with no harness routing or re-qualification.</li>
+                        <li class="amber"><strong>Camera spatial segregation</strong> lets many autonomous nodes coexist without cross-talk.</li>
+                    </ul>
+                    <div class="highlight"><strong>Key insight:</strong> energy availability, not modulation, governs effective throughput, motivating <em>energy-aware</em> OCC design.</div>
+                </div>
+                <div>
+                    <div class="figbox">
+                        <img src="figs/fig_setup_overview.png" alt="Implemented laboratory system">
+                        <div class="figcap"><b>Implemented system.</b> Dark-room breadboard: an LED lamp illuminates the PV cell; the Arduino LED transmitter emits OOK bursts captured by the camera. Aluminium tape emulates a satellite panel.</div>
+                    </div>
+                    <div class="stat-row">
+                        <div class="stat"><div class="stat-value">9.6<span class="u"> %</span></div><div class="stat-label">Duty Cycle</div></div>
+                        <div class="stat"><div class="stat-value">1.43<span class="u"> bps</span></div><div class="stat-label">Throughput</div></div>
+                        <div class="stat"><div class="stat-value">&lt;2<span class="u">·10⁻⁵</span></div><div class="stat-label">Bit Error Rate</div></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==================== SLIDE 4 · FIND OUT MORE ==================== -->
+    <section class="slide">
+        <div class="accent-bar"></div>
+        <div class="s-head">
+            <span class="s-num">3</span>
+            <div>
+                <div class="s-title">Find Out More!</div>
+            </div>
+            <img class="s-logo" src="2026csndsp-logo.png" alt="CSNDSP 2026">
+        </div>
+        <div class="s-body" style="padding-bottom:16px;">
+            <div class="fom">
+                <div>
+                    <div class="fom-grid2">
+                        <div class="fom-block">
+                            <h3>Correspondence Author</h3>
+                            <p><b>Vicente Matus</b><br>
+                            IDeTIC, Universidad de Las Palmas de Gran Canaria<br>
+                            <span class="muted">vicente.matus@ulpgc.es</span></p>
+                        </div>
+                        <div class="fom-block">
+                            <h3>Additional Authors</h3>
+                            <p><b>Jaime Aranda</b> <span class="muted">(ULPGC)</span><br>
+                            <b>Rafael Perez-Jimenez</b> <span class="muted">(ULPGC)</span><br>
+                            <b>Jose Rabadan</b> <span class="muted">(ULPGC)</span></p>
+                        </div>
+                    </div>
+                    <div class="fom-block">
+                        <h3>Acknowledgements</h3>
+                        <p class="muted">Funded by the European Union's Horizon Europe programme under the <b>OCC4SAT</b> project (Grant Agreement No. 101135434), with SERI top-up funding. Supported by OCCAM (PID2020-114561RB-100) and SUCCESS (TED2021-130049B-C21) of the AEI, and by Grant Catalina Ruiz (APCR2022010014) of the ACIISI under the European Social Fund.</p>
+                    </div>
+                    <div class="fom-block">
+                        <h3>Selected References</h3>
+                        <ol>
+                            <li>J. Rabadan et&nbsp;al., "OCC Strategies for Intra-Satellite Communications: OCC4SAT Project," <em>CSNDSP</em>, 2024.</li>
+                            <li>M. Jahnke et&nbsp;al., "Development and Evaluation of a LiFi-Transceiver Module for TMTC Intra-Satellite Communication," <em>Eng. Proc.</em>, 2025.</li>
+                            <li>S.-M. Kim et&nbsp;al., "Simultaneous reception of solar power and visible light communication using a solar cell," <em>Opt. Eng.</em>, 2014.</li>
+                            <li>J. M. Luna-Rivera et&nbsp;al., "A Novel Hybrid OCC/RF Architecture for IoT-Based Smart Farming," <em>IEEE IoT J.</em>, 2025.</li>
+                        </ol>
+                        <p class="muted" style="margin-top:8px;font-style:italic;">See the full manuscript for the complete bibliography.</p>
+                    </div>
+                </div>
+                <div class="qr-side">
+                    <div class="qr-box"><img src="figs/qr.png" alt="QR code to poster"></div>
+                    <div class="qr-cap">Scan for Poster</div>
+                    <div class="qr-sub">Full PDF poster &amp; details</div>
+                </div>
+            </div>
+        </div>
+        <div class="logo-strip">
+            <img src="occ4sat/occ4sat-logo-white.svg" alt="OCC4SAT" class="tall">
+            <img src="occ4sat/ulpgc.png" alt="ULPGC">
+            <img src="occ4sat/argotec.png" alt="Argotec">
+            <img src="occ4sat/pi_lighting.png" alt="Pi Lighting">
+            <img src="occ4sat/ereca.png" alt="E.RE.C.A">
+        </div>
+    </section>
+
+  </div>
+</div>
+
+<div class="nav">
+    <button id="prev" aria-label="Previous">‹</button>
+    <div class="dots" id="dots"></div>
+    <button id="next" aria-label="Next">›</button>
+</div>
+<div class="pageno" id="pageno"></div>
+
+<script>
+    var slides = Array.prototype.slice.call(document.querySelectorAll('.slide'));
+    var deck = document.getElementById('deck');
+    var dotsWrap = document.getElementById('dots');
+    var pageno = document.getElementById('pageno');
+    var cur = 0;
+
+    slides.forEach(function (_, i) {
+        var d = document.createElement('div');
+        d.className = 'dot' + (i === 0 ? ' active' : '');
+        d.addEventListener('click', function () { go(i); });
+        dotsWrap.appendChild(d);
+    });
+    var dots = Array.prototype.slice.call(dotsWrap.children);
+
+    function go(i) {
+        cur = Math.max(0, Math.min(slides.length - 1, i));
+        slides.forEach(function (s, k) { s.classList.toggle('active', k === cur); });
+        dots.forEach(function (d, k) { d.classList.toggle('active', k === cur); });
+        pageno.textContent = (cur + 1) + ' / ' + slides.length;
+    }
+    function fit() {
+        var scale = Math.min(window.innerWidth / 1280, window.innerHeight / 720);
+        deck.style.transform = 'scale(' + scale + ')';
+    }
+
+    document.getElementById('prev').addEventListener('click', function () { go(cur - 1); });
+    document.getElementById('next').addEventListener('click', function () { go(cur + 1); });
+    document.addEventListener('keydown', function (e) {
+        if (e.key === 'ArrowRight' || e.key === ' ' || e.key === 'PageDown') { go(cur + 1); e.preventDefault(); }
+        else if (e.key === 'ArrowLeft' || e.key === 'PageUp') { go(cur - 1); e.preventDefault(); }
+        else if (e.key === 'Home') { go(0); }
+        else if (e.key === 'End') { go(slides.length - 1); }
+        else if (e.key.toLowerCase() === 'f') {
+            if (!document.fullscreenElement) document.documentElement.requestFullscreen();
+            else document.exitFullscreen();
+        }
+    });
+    window.addEventListener('resize', fit);
+    window.addEventListener('load', fit);
+    fit(); go(0);
+</script>
+</body>
+</html>
